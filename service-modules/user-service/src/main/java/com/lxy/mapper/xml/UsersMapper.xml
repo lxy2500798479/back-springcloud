@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxy.mapper.UsersMapper">
+    <resultMap id="BaseResultMap" type="com.lxy.userEntity.Users">
+        <!--@mbg.generated-->
+        <!--@Table users-->
+        <id column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="uname" jdbcType="VARCHAR" property="uname"/>
+        <result column="status" jdbcType="OTHER" property="status"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        user_id,
+        username,
+        `password`,
+        uname,
+        `status`,
+        avatar,
+        created_at,
+        updated_at
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from users
+        where user_id = #{userId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete
+        from users
+        where user_id = #{userId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.lxy.userEntity.Users">
+        <!--@mbg.generated-->
+        insert into users (user_id, username, `password`,
+                           uname, `status`, avatar,
+                           created_at, updated_at)
+        values (#{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                #{uname,jdbcType=VARCHAR}, #{status,jdbcType=OTHER}, #{avatar,jdbcType=VARCHAR},
+                #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.lxy.userEntity.Users">
+        <!--@mbg.generated-->
+        insert into users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="uname != null">
+                uname,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="uname != null">
+                #{uname,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=OTHER},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lxy.userEntity.Users">
+        <!--@mbg.generated-->
+        update users
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="uname != null">
+                uname = #{uname,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=OTHER},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.lxy.userEntity.Users">
+        <!--@mbg.generated-->
+        update users
+        set username   = #{username,jdbcType=VARCHAR},
+            `password` = #{password,jdbcType=VARCHAR},
+            uname      = #{uname,jdbcType=VARCHAR},
+            `status`   = #{status,jdbcType=OTHER},
+            avatar     = #{avatar,jdbcType=VARCHAR},
+            created_at = #{createdAt,jdbcType=TIMESTAMP},
+            updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+        where user_id = #{userId,jdbcType=BIGINT}
+    </update>
+
+    <insert id="registerAndUpTeacherStudentAdmins">
+        <!-- 插入 Users 表 -->
+        INSERT INTO users (user_id, username, uname, password, status)
+        VALUES (#{user.userId}, #{user.username}, #{user.uname}, #{user.password}, #{user.status});
+        <!-- 获取刚插入的用户ID -->
+        <selectKey keyProperty="user.userId" order="AFTER" resultType="long">
+            SELECT users.user_id
+            FROM users
+            WHERE users.username = #{user.username}
+        </selectKey>
+
+        <!-- 插入对应的角色 -->
+        <choose>
+            <when test="accountType == 'student'">
+                UPDATE Students
+                SET user_id = #{user.userId}
+                WHERE stu_id = #{studentId};
+            </when>
+            <when test="accountType == 'teacher'">
+                UPDATE Teachers
+                SET user_id = #{user.userId}
+                WHERE teacher_code = #{teacherCode};
+            </when>
+            <when test="accountType == 'admin'">
+                UPDATE Admins
+                SET admin_id = #{user.userId}
+                WHERE id = #{adminId};
+            </when>
+        </choose>
+    </insert>
+
+    <select id="selectAllByUsername" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from users
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+
+    <resultMap id="userInfoResultMap" type="com.lxy.userEntity.VO.UserInfoVO">
+        <id column="userId" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="uname" property="uname"/>
+        <result column="avatar" property="avatar"/>
+
+
+        <collection ofType="com.lxy.userEntity.Roles" property="roles">
+            <id column="roleId" property="roleId"/>
+            <result column="roleName" property="roleName"/>
+            <result column="roleDescription" property="description"/>
+        </collection>
+
+        <collection ofType="com.lxy.userEntity.Permissions" property="permissions">
+            <id column="permissionId" property="permissionId"/>
+            <result column="permissionName" property="permissionName"/>
+            <result column="permissionDescription" property="description"/>
+        </collection>
+
+        <collection column="userId" ofType="com.lxy.userEntity.VO.MenusVO" property="menus"
+                    select="selectMenusByUserId"/>
+
+    </resultMap>
+
+
+    <resultMap id="menuResultMap" type="com.lxy.userEntity.VO.MenusVO">
+        <id column="menu_id" property="menuId"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="path" property="path"/>
+        <result column="component" property="component"/>
+        <result column="order" property="order"/>
+        <result column="icon" property="icon"/>
+        <collection column="menu_id" ofType="com.lxy.userEntity.VO.MenusVO" property="children"
+                    select="selectChildren"/>
+    </resultMap>
+
+    <select id="selectMenusByUserId" resultMap="menuResultMap">
+        select m.*
+        from menus m
+                 join userdb.role_menus rm on m.menu_id = rm.menu_id
+                 join userdb.user_roles ur on rm.role_id = ur.role_id
+        where ur.user_id = #{userId}
+          and m.parent_id is null
+    </select>
+
+    <select id="selectChildren" resultMap="menuResultMap">
+        select *
+        from menus
+        where parent_id = #{menu_id}
+    </select>
+
+
+    <select id="selectUserWithDetails" resultMap="userInfoResultMap">
+        select u.user_id         as userId,
+               u.username,
+               u.uname,
+               u.avatar,
+               r.role_id         as roleId,
+               r.role_name       as roleName,
+               r.description     as roleDescription,
+               p.permission_id   as permissionId,
+               p.permission_name as permissionName,
+               p.description     as permissionDescription
+        from users u
+                 left join userdb.user_roles ur on u.user_id = ur.user_id
+                 left join userdb.roles r on r.role_id = ur.role_id
+                 left join userdb.role_permissions rp on r.role_id = rp.role_id
+                 left join userdb.permissions p on p.permission_id = rp.permission_id
+        where u.username = #{username,jdbcType=VARCHAR}
+    </select>
+</mapper>

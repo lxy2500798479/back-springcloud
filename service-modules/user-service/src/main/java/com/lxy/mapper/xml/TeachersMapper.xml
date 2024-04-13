@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxy.mapper.TeachersMapper">
+  <resultMap id="BaseResultMap" type="com.lxy.userEntity.Teachers">
+    <!--@mbg.generated-->
+    <!--@Table teachers-->
+    <id column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="teacher_code" jdbcType="VARCHAR" property="teacherCode" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    teacher_id, user_id, teacher_code, teacher_name, department, id_card, phone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from teachers
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from teachers
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="teacher_id" keyProperty="teacherId" parameterType="com.lxy.userEntity.Teachers" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into teachers (user_id, teacher_code, teacher_name, 
+      department, id_card, phone
+      )
+    values (#{userId,jdbcType=INTEGER}, #{teacherCode,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="teacher_id" keyProperty="teacherId" parameterType="com.lxy.userEntity.Teachers" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into teachers
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="teacherCode != null">
+        teacher_code,
+      </if>
+      <if test="teacherName != null">
+        teacher_name,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherCode != null">
+        #{teacherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lxy.userEntity.Teachers">
+    <!--@mbg.generated-->
+    update teachers
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherCode != null">
+        teacher_code = #{teacherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null">
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lxy.userEntity.Teachers">
+    <!--@mbg.generated-->
+    update teachers
+    set user_id = #{userId,jdbcType=INTEGER},
+      teacher_code = #{teacherCode,jdbcType=VARCHAR},
+      teacher_name = #{teacherName,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getTeacherByTeaCode" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+    </include>
+    from teachers
+    where teacher_code = #{teacherCode,jdbcType=VARCHAR}
+    </select>
+
+  <resultMap id="TeacherAllocationResultMap" type="com.lxy.userEntity.VO.TeacherAllocationVO">
+    <id property="teacherId" column="teacherId"/>
+    <result property="userId" column="userId" jdbcType="BIGINT" javaType="java.lang.String" />
+    <result property="teacherName" column="teacherName"/>
+    <collection property="classes" ofType="com.lxy.userEntity.Classes">
+      <!-- 假设class_id和class_name能唯一确定一个Classes实例 -->
+      <id property="classId" column="classId"/>
+      <result property="className" column="className"/>
+    </collection>
+    <collection property="courses" ofType="com.lxy.userEntity.Courses">
+      <!-- 假设course_id和course_name能唯一确定一个Courses实例 -->
+      <id property="courseId" column="courseId"/>
+      <result property="courseName" column="courseName"/>
+    </collection>
+  </resultMap>
+
+
+  <select id="getTeacherAllocationVO" resultMap="TeacherAllocationResultMap">
+    SELECT
+      t.teacher_id AS "teacherId",
+      t.user_id AS "userId",
+      t.teacher_name AS "teacherName",
+      c.class_id AS "classId",
+      c.class_name AS "className",
+      co.course_id AS "courseId",
+      co.course_name AS "courseName"
+    FROM
+      teachers t
+        LEFT JOIN teacher_class_courses tcc ON t.user_id = tcc.user_id
+        LEFT JOIN classes c ON tcc.class_id = c.class_id
+        LEFT JOIN courses co ON tcc.course_id = co.course_id
+  </select>
+
+
+  <resultMap id="classCourseResultMap" type="com.lxy.userEntity.VO.TeacherPersonalClassCourseVO">
+    <association property="classes" javaType="com.lxy.userEntity.Classes">
+      <result property="classId" column="classId"/>
+      <result property="className" column="className"/>
+    </association>
+    <association property="courses" javaType="com.lxy.userEntity.Courses">
+      <result property="courseId" column="courseId"/>
+      <result property="courseName" column="courseName"/>
+    </association>
+  </resultMap>
+
+
+  <select id="getTeacherPersonalClassCourseVO" resultMap="classCourseResultMap">
+    SELECT
+    c.class_id as "classId",
+    c.class_name as "className",
+    co.course_id as "courseId",
+    co.course_name as "courseName"
+    FROM teacher_class_courses tcc
+    LEFT JOIN classes c ON tcc.class_id = c.class_id
+    LEFT JOIN courses co ON tcc.course_id = co.course_id
+    WHERE tcc.user_id = #{userId}
+  </select>
+
+</mapper>

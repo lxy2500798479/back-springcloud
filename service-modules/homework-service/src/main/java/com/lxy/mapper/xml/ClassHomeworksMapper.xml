@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxy.mapper.ClassHomeworksMapper">
+  <resultMap id="BaseResultMap" type="com.lxy.userEntity.ClassHomeworks">
+    <!--@mbg.generated-->
+    <!--@Table class_homeworks-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="homework_id" jdbcType="BIGINT" property="homeworkId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, class_id, homework_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from class_homeworks
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from class_homeworks
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.lxy.userEntity.ClassHomeworks" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into class_homeworks (class_id, homework_id)
+    values (#{classId,jdbcType=INTEGER}, #{homeworkId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.lxy.userEntity.ClassHomeworks" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into class_homeworks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="homeworkId != null">
+        homework_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkId != null">
+        #{homeworkId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lxy.userEntity.ClassHomeworks">
+    <!--@mbg.generated-->
+    update class_homeworks
+    <set>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkId != null">
+        homework_id = #{homeworkId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lxy.userEntity.ClassHomeworks">
+    <!--@mbg.generated-->
+    update class_homeworks
+    set class_id = #{classId,jdbcType=INTEGER},
+      homework_id = #{homeworkId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertBatch">
+    insert into class_homeworks(id, class_id, homework_id) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id}, #{item.classId}, #{item.homeworkId})
+    </foreach>
+    </insert>
+</mapper>

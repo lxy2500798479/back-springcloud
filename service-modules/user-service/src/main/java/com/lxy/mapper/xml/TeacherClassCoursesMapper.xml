@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxy.mapper.TeacherClassCoursesMapper">
+  <resultMap id="BaseResultMap" type="com.lxy.userEntity.TeacherClassCourses">
+    <!--@mbg.generated-->
+    <!--@Table teacher_class_courses-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, class_id, course_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from teacher_class_courses
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from teacher_class_courses
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.lxy.userEntity.TeacherClassCourses" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into teacher_class_courses (user_id, class_id, course_id
+      )
+    values (#{userId,jdbcType=BIGINT}, #{classId,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.lxy.userEntity.TeacherClassCourses" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into teacher_class_courses
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lxy.userEntity.TeacherClassCourses">
+    <!--@mbg.generated-->
+    update teacher_class_courses
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lxy.userEntity.TeacherClassCourses">
+    <!--@mbg.generated-->
+    update teacher_class_courses
+    set user_id = #{userId,jdbcType=BIGINT},
+      class_id = #{classId,jdbcType=INTEGER},
+      course_id = #{courseId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insertBatch">
+    insert into teacher_class_courses (user_id, class_id, course_id) values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.userId}, #{item.classId}, #{item.courseId})
+    </foreach>
+    </insert>
+
+
+  <delete id="deleteBatch" parameterType="list">
+    delete from teacher_class_courses where (user_id, class_id, course_id) in
+    <foreach collection="list" item="item" separator="," open="(" close=")">
+      (#{item.userId}, #{item.classId}, #{item.courseId})
+    </foreach>
+  </delete>
+
+</mapper>
