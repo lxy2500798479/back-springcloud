@@ -21,3 +21,4 @@
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=lxy2001910&layout=compact&theme=tokyonight)](https://github.com/anuraghazra/github-readme-stats)
 
 
+![Dino](https://raw.githubusercontent.com/sanket9006/sanket9006/master/dino.gif)
