@@ -5,6 +5,7 @@ import com.lxy.userEntity.Homeworks;
 
 import java.util.List;
 
+import com.lxy.userEntity.VO.HomeworkInfoVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,8 @@ public interface HomeworksMapper extends BaseMapper<Homeworks> {
     int updateByPrimaryKey(Homeworks record);
 
     int batchInsert(@Param("list") List<Homeworks> list);
+
+    List<Homeworks> getTeacherPublicHomework(String teacherId);
+
+    List<HomeworkInfoVO> getHomeworkInfoVOList(String teacherId);
 }

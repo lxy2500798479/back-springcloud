@@ -184,4 +184,7 @@
     WHERE tcc.user_id = #{userId}
   </select>
 
+  <select id="getTeacherPublicHomework" resultType="com.lxy.userEntity.Homeworks">
+    select * from homeworks where teacher_id = #{teacherId}
+    </select>
 </mapper>

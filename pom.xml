@@ -12,7 +12,7 @@
         <module>common</module>
         <module>gateway</module>
         <module>service-modules</module>
-        <module>service-modules/common-lib</module>
+
     </modules>
 
     <properties>

@@ -197,4 +197,41 @@
         )
     </foreach>
   </insert>
+
+  <select id="getTeacherPublicHomework" resultMap="BaseResultMap">
+    select * from homeworks where teacher_id = #{teacherId,jdbcType=BIGINT}
+    </select>
+  <resultMap id="HomeworkInfoVOMap" type="com.lxy.userEntity.VO.HomeworkInfoVO">
+    <id property="id" column="homework_id"/>
+    <result property="title" column="title"/>
+    <result property="description" column="description"/>
+    <result property="create_at" column="created_at"/>
+    <result property="due_date" column="due_date"/>
+    <result property="courseId" column="course_id"/>
+    <result property="courseName" column="course_name"/>
+    <collection property="classesList" ofType="com.lxy.userEntity.Classes">
+        <id property="classId" column="class_id"/>
+        <result property="className" column="class_name"/>
+    </collection>
+
+  </resultMap>
+
+  <select id="getHomeworkInfoVOList" resultMap="HomeworkInfoVOMap">
+    SELECT
+    h.id AS homework_id,
+    h.title,
+    h.description,
+    h.created_at,
+    h.due_date,
+    c.course_id,
+    c.course_name,
+    cl.class_id,
+    cl.class_name
+    FROM homeworks h
+    LEFT JOIN courses c ON h.course_id = c.course_id
+    LEFT JOIN class_homeworks ch ON h.id = ch.homework_id
+    LEFT JOIN classes cl ON ch.class_id = cl.class_id
+    WHERE h.teacher_id = #{teacherId,jdbcType=BIGINT}
+  </select>
+
 </mapper>

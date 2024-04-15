@@ -1,6 +1,7 @@
 package com.lxy.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lxy.userEntity.Homeworks;
 import com.lxy.userEntity.Teachers;
 import com.lxy.userEntity.VO.TeacherAllocationVO;
 import com.lxy.userEntity.VO.TeacherPersonalClassCourseVO;
@@ -29,4 +30,8 @@ public interface TeachersMapper extends BaseMapper<Teachers> {
     int updateByPrimaryKey(Teachers record);
 
     Teachers getTeacherByTeaCode(String teaCode);
+
+
+
+
 }

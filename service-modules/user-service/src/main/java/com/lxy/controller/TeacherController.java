@@ -4,6 +4,7 @@ package com.lxy.controller;
 import com.lxy.mapper.TeachersMapper;
 import com.lxy.result.Result;
 import com.lxy.service.TeacherService;
+import com.lxy.userEntity.Homeworks;
 import com.lxy.userEntity.Teachers;
 import com.lxy.userEntity.VO.TeacherPersonalClassCourseVO;
 
@@ -39,6 +40,8 @@ public class TeacherController {
     public Result<List<TeacherPersonalClassCourseVO>> getTeacherClassCourseVO(@PathVariable(value = "teacherId") @NotBlank(message = "teacherId不能为空") String teacherId) {
         return Result.success(teachersMapper.getTeacherPersonalClassCourseVO(teacherId));
     }
+
+
 
 
 

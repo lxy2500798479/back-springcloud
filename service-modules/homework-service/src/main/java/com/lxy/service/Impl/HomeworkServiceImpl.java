@@ -10,6 +10,7 @@ import com.lxy.service.HomeworkService;
 import com.lxy.userEntity.BO.HomeworkClassBO;
 import com.lxy.userEntity.ClassHomeworks;
 import com.lxy.userEntity.Homeworks;
+import com.lxy.userEntity.VO.HomeworkInfoVO;
 import com.lxy.utils.FileStorageComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,10 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworksMapper, Homeworks>
         return classHomeworksMapper.insertBatch(classHomeworksList);
     }
 
+    @Override
+    public List<HomeworkInfoVO> getHomeworkInfoVOList(String teacherId) {
+        return homeworksMapper.getHomeworkInfoVOList(teacherId);
+    }
 
 
 }

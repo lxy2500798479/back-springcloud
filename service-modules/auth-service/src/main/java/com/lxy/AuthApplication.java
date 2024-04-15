@@ -11,7 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import org.springframework.stereotype.Indexed;
 
-@Indexed
+
 @EnableDiscoveryClient
 @EnableFeignClients
 //@CrossOrigin

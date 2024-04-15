@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.stereotype.Indexed;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@Indexed
+
 @CrossOrigin
 @SpringBootApplication
 @EnableDiscoveryClient

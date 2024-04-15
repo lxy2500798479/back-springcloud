@@ -11,7 +11,7 @@ import com.lxy.userEntity.Users;
 import com.lxy.userEntity.VO.UserInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
+//import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -23,7 +23,7 @@ public class UserController {
 
     private final UsersMapper usersMapper;
 
-    private final RedisTemplate<String, Object> redisTemplate;
+//    private final RedisTemplate<String, Object> redisTemplate;
 
     @Value("${spring.redis.host}")
     private String redisHost;

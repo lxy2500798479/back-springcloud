@@ -15,6 +15,8 @@
         <module>auth-service</module>
         <module>user-service</module>
         <module>homework-service</module>
+        <module>common-config</module>
+
     </modules>
 
     <properties>
@@ -32,18 +34,11 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.lxy</groupId>
-            <artifactId>common-lib</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
 
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-indexer</artifactId>
-            <optional>true</optional>
-        </dependency>
+
+
+
 
 
 
