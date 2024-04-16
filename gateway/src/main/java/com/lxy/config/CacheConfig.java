@@ -1,4 +1,4 @@
-package com.lxy.handler.config;
+package com.lxy.config;
 
 
 import com.github.benmanes.caffeine.cache.Caffeine;

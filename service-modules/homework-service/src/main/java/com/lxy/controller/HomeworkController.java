@@ -41,7 +41,7 @@ public class HomeworkController {
 
     @PostMapping("/createHomework")
     public Result<String> createHomework(@RequestParam("homework") String homeworkJson,@RequestParam(value = "file",required = false) MultipartFile file) throws JsonProcessingException {
-        System.out.println(file.getOriginalFilename());
+//        System.out.println(file.getOriginalFilename());
         // 先将homeworkJson字符串转换为Homeworks对象
         HomeworkClassBO homeworkClassBO = new ObjectMapper().readValue(homeworkJson, HomeworkClassBO.class);
         System.out.println(homeworkClassBO.getHomeworks().toString());
