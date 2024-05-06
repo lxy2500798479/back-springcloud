@@ -1,237 +1,264 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lxy.mapper.HomeworksMapper">
-  <resultMap id="BaseResultMap" type="com.lxy.userEntity.Homeworks">
-    <!--@mbg.generated-->
-    <!--@Table homeworks-->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="description" jdbcType="LONGVARCHAR" property="description" />
-    <result column="teacher_id" jdbcType="BIGINT" property="teacherId" />
-    <result column="course_id" jdbcType="INTEGER" property="courseId" />
-    <result column="due_date" jdbcType="TIMESTAMP" property="dueDate" />
-    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-    <result column="file_path" jdbcType="VARCHAR" property="filePath" />
-    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
-    <result column="file_size" jdbcType="BIGINT" property="fileSize" />
-    <result column="file_type" jdbcType="VARCHAR" property="fileType" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, title, description, teacher_id, course_id, due_date, created_at, updated_at, 
-    file_path, file_name, file_size, file_type
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from homeworks
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--@mbg.generated-->
-    delete from homeworks
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.lxy.userEntity.Homeworks">
-    <!--@mbg.generated-->
-    insert into homeworks (id, title, description, 
-      teacher_id, course_id, due_date, 
-      created_at, updated_at, file_path, 
-      file_name, file_size, file_type
-      )
-    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, 
-      #{teacherId,jdbcType=BIGINT}, #{courseId,jdbcType=INTEGER}, #{dueDate,jdbcType=TIMESTAMP}, 
-      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{filePath,jdbcType=VARCHAR}, 
-      #{fileName,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, #{fileType,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.lxy.userEntity.Homeworks">
-    <!--@mbg.generated-->
-    insert into homeworks
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <resultMap id="BaseResultMap" type="com.lxy.userEntity.Homeworks">
+        <!--@mbg.generated-->
+        <!--@Table homeworks-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="description" jdbcType="LONGVARCHAR" property="description"/>
+        <result column="teacher_id" jdbcType="BIGINT" property="teacherId"/>
+        <result column="course_id" jdbcType="INTEGER" property="courseId"/>
+        <result column="due_date" jdbcType="TIMESTAMP" property="dueDate"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+        <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
+        <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+        <result column="file_size" jdbcType="BIGINT" property="fileSize"/>
+        <result column="file_type" jdbcType="VARCHAR" property="fileType"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
         id,
-      </if>
-      <if test="title != null">
         title,
-      </if>
-      <if test="description != null">
         description,
-      </if>
-      <if test="teacherId != null">
         teacher_id,
-      </if>
-      <if test="courseId != null">
         course_id,
-      </if>
-      <if test="dueDate != null">
         due_date,
-      </if>
-      <if test="createdAt != null">
         created_at,
-      </if>
-      <if test="updatedAt != null">
         updated_at,
-      </if>
-      <if test="filePath != null">
         file_path,
-      </if>
-      <if test="fileName != null">
         file_name,
-      </if>
-      <if test="fileSize != null">
         file_size,
-      </if>
-      <if test="fileType != null">
-        file_type,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="teacherId != null">
-        #{teacherId,jdbcType=BIGINT},
-      </if>
-      <if test="courseId != null">
-        #{courseId,jdbcType=INTEGER},
-      </if>
-      <if test="dueDate != null">
-        #{dueDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdAt != null">
-        #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null">
-        #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="filePath != null">
-        #{filePath,jdbcType=VARCHAR},
-      </if>
-      <if test="fileName != null">
-        #{fileName,jdbcType=VARCHAR},
-      </if>
-      <if test="fileSize != null">
-        #{fileSize,jdbcType=BIGINT},
-      </if>
-      <if test="fileType != null">
-        #{fileType,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lxy.userEntity.Homeworks">
-    <!--@mbg.generated-->
-    update homeworks
-    <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="teacherId != null">
-        teacher_id = #{teacherId,jdbcType=BIGINT},
-      </if>
-      <if test="courseId != null">
-        course_id = #{courseId,jdbcType=INTEGER},
-      </if>
-      <if test="dueDate != null">
-        due_date = #{dueDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdAt != null">
-        created_at = #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null">
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="filePath != null">
-        file_path = #{filePath,jdbcType=VARCHAR},
-      </if>
-      <if test="fileName != null">
-        file_name = #{fileName,jdbcType=VARCHAR},
-      </if>
-      <if test="fileSize != null">
-        file_size = #{fileSize,jdbcType=BIGINT},
-      </if>
-      <if test="fileType != null">
-        file_type = #{fileType,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lxy.userEntity.Homeworks">
-    <!--@mbg.generated-->
-    update homeworks
-    set title = #{title,jdbcType=VARCHAR},
-      description = #{description,jdbcType=LONGVARCHAR},
-      teacher_id = #{teacherId,jdbcType=BIGINT},
-      course_id = #{courseId,jdbcType=INTEGER},
-      due_date = #{dueDate,jdbcType=TIMESTAMP},
-      created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      file_path = #{filePath,jdbcType=VARCHAR},
-      file_name = #{fileName,jdbcType=VARCHAR},
-      file_size = #{fileSize,jdbcType=BIGINT},
-      file_type = #{fileType,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <insert id="batchInsert" parameterType="map">
-    <!--@mbg.generated-->
-    insert into homeworks
-    (id, title, description, teacher_id, course_id, due_date, created_at, updated_at, 
-      file_path, file_name, file_size, file_type)
-    values
-    <foreach collection="list" item="item" separator=",">
-      (#{item.id,jdbcType=BIGINT}, #{item.title,jdbcType=VARCHAR}, #{item.description,jdbcType=LONGVARCHAR}, 
-        #{item.teacherId,jdbcType=BIGINT}, #{item.courseId,jdbcType=INTEGER}, #{item.dueDate,jdbcType=TIMESTAMP}, 
-        #{item.createdAt,jdbcType=TIMESTAMP}, #{item.updatedAt,jdbcType=TIMESTAMP}, #{item.filePath,jdbcType=VARCHAR}, 
-        #{item.fileName,jdbcType=VARCHAR}, #{item.fileSize,jdbcType=BIGINT}, #{item.fileType,jdbcType=VARCHAR}
-        )
-    </foreach>
-  </insert>
-
-  <select id="getTeacherPublicHomework" resultMap="BaseResultMap">
-    select * from homeworks where teacher_id = #{teacherId,jdbcType=BIGINT}
+        file_type
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from homeworks
+        where id = #{id,jdbcType=BIGINT}
     </select>
-  <resultMap id="HomeworkInfoVOMap" type="com.lxy.userEntity.VO.HomeworkInfoVO">
-    <id property="id" column="homework_id"/>
-    <result property="title" column="title"/>
-    <result property="description" column="description"/>
-    <result property="create_at" column="created_at"/>
-    <result property="due_date" column="due_date"/>
-    <result property="courseId" column="course_id"/>
-    <result property="courseName" column="course_name"/>
-    <collection property="classesList" ofType="com.lxy.userEntity.Classes">
-        <id property="classId" column="class_id"/>
-        <result property="className" column="class_name"/>
-    </collection>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete
+        from homeworks
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.lxy.userEntity.Homeworks">
+        <!--@mbg.generated-->
+        insert into homeworks (id, title, description,
+                               teacher_id, course_id, due_date,
+                               created_at, updated_at, file_path,
+                               file_name, file_size, file_type)
+        values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR},
+                #{teacherId,jdbcType=BIGINT}, #{courseId,jdbcType=INTEGER}, #{dueDate,jdbcType=TIMESTAMP},
+                #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{filePath,jdbcType=VARCHAR},
+                #{fileName,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, #{fileType,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.lxy.userEntity.Homeworks">
+        <!--@mbg.generated-->
+        insert into homeworks
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="teacherId != null">
+                teacher_id,
+            </if>
+            <if test="courseId != null">
+                course_id,
+            </if>
+            <if test="dueDate != null">
+                due_date,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="filePath != null">
+                file_path,
+            </if>
+            <if test="fileName != null">
+                file_name,
+            </if>
+            <if test="fileSize != null">
+                file_size,
+            </if>
+            <if test="fileType != null">
+                file_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="teacherId != null">
+                #{teacherId,jdbcType=BIGINT},
+            </if>
+            <if test="courseId != null">
+                #{courseId,jdbcType=INTEGER},
+            </if>
+            <if test="dueDate != null">
+                #{dueDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="filePath != null">
+                #{filePath,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize,jdbcType=BIGINT},
+            </if>
+            <if test="fileType != null">
+                #{fileType,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lxy.userEntity.Homeworks">
+        <!--@mbg.generated-->
+        update homeworks
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="teacherId != null">
+                teacher_id = #{teacherId,jdbcType=BIGINT},
+            </if>
+            <if test="courseId != null">
+                course_id = #{courseId,jdbcType=INTEGER},
+            </if>
+            <if test="dueDate != null">
+                due_date = #{dueDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="filePath != null">
+                file_path = #{filePath,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                file_name = #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize,jdbcType=BIGINT},
+            </if>
+            <if test="fileType != null">
+                file_type = #{fileType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.lxy.userEntity.Homeworks">
+        <!--@mbg.generated-->
+        update homeworks
+        set title       = #{title,jdbcType=VARCHAR},
+            description = #{description,jdbcType=LONGVARCHAR},
+            teacher_id  = #{teacherId,jdbcType=BIGINT},
+            course_id   = #{courseId,jdbcType=INTEGER},
+            due_date    = #{dueDate,jdbcType=TIMESTAMP},
+            created_at  = #{createdAt,jdbcType=TIMESTAMP},
+            updated_at  = #{updatedAt,jdbcType=TIMESTAMP},
+            file_path   = #{filePath,jdbcType=VARCHAR},
+            file_name   = #{fileName,jdbcType=VARCHAR},
+            file_size   = #{fileSize,jdbcType=BIGINT},
+            file_type   = #{fileType,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <insert id="batchInsert" parameterType="map">
+        <!--@mbg.generated-->
+        insert into homeworks
+        (id, title, description, teacher_id, course_id, due_date, created_at, updated_at,
+         file_path, file_name, file_size, file_type)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.title,jdbcType=VARCHAR}, #{item.description,jdbcType=LONGVARCHAR},
+             #{item.teacherId,jdbcType=BIGINT}, #{item.courseId,jdbcType=INTEGER}, #{item.dueDate,jdbcType=TIMESTAMP},
+             #{item.createdAt,jdbcType=TIMESTAMP}, #{item.updatedAt,jdbcType=TIMESTAMP},
+             #{item.filePath,jdbcType=VARCHAR},
+             #{item.fileName,jdbcType=VARCHAR}, #{item.fileSize,jdbcType=BIGINT}, #{item.fileType,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
 
-  </resultMap>
+    <select id="getTeacherPublicHomework" resultMap="BaseResultMap">
+        select *
+        from homeworks
+        where teacher_id = #{teacherId,jdbcType=BIGINT}
+    </select>
+    <resultMap id="HomeworkInfoVOMap" type="com.lxy.userEntity.VO.HomeworkInfoVO">
+        <id property="id" column="homework_id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="create_at" column="created_at"/>
+        <result property="due_date" column="due_date"/>
+        <result property="courseId" column="course_id"/>
+        <result property="courseName" column="course_name"/>
+        <collection property="classesList" ofType="com.lxy.userEntity.Classes">
+            <id property="classId" column="class_id"/>
+            <result property="className" column="class_name"/>
+        </collection>
+    </resultMap>
 
-  <select id="getHomeworkInfoVOList" resultMap="HomeworkInfoVOMap">
-    SELECT
-    h.id AS homework_id,
-    h.title,
-    h.description,
-    h.created_at,
-    h.due_date,
-    c.course_id,
-    c.course_name,
-    cl.class_id,
-    cl.class_name
-    FROM homeworks h
-    LEFT JOIN courses c ON h.course_id = c.course_id
-    LEFT JOIN class_homeworks ch ON h.id = ch.homework_id
-    LEFT JOIN classes cl ON ch.class_id = cl.class_id
-    WHERE h.teacher_id = #{teacherId,jdbcType=BIGINT}
-  </select>
+    <select id="getHomeworkInfoVOList" resultMap="HomeworkInfoVOMap">
+        SELECT h.id AS homework_id,
+               h.title,
+               h.description,
+               h.created_at,
+               h.due_date,
+               c.course_id,
+               c.course_name,
+               cl.class_id,
+               cl.class_name
+        FROM homeworks h
+                 LEFT JOIN courses c ON h.course_id = c.course_id
+                 LEFT JOIN class_homeworks ch ON h.id = ch.homework_id
+                 LEFT JOIN classes cl ON ch.class_id = cl.class_id
+        WHERE h.teacher_id = #{teacherId,jdbcType=BIGINT}
+    </select>
 
+    <select id="getStudentHomeworkInfoVOList" resultType="com.lxy.userEntity.VO.HomeworkStudentVO">
+        SELECT
+            h.id AS homework_id,
+            h.title,
+            h.description,
+            h.created_at as createAt,
+            h.due_date as dueDate,
+            h.file_name,
+            c.course_name,
+            u.username as teacherName,
+            u.user_id as teacherId
+
+        from class_homeworks ch
+                 LEFT JOIN homeworks h ON ch.homework_id = h.id
+                 LEFT JOIN courses c ON h.course_id = c.course_id
+                 left join users u on h.teacher_id = u.user_id
+        where ch.class_id = #{classId,jdbcType=INTEGER}
+    </select>
 </mapper>

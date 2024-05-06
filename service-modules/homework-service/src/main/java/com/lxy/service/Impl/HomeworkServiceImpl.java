@@ -11,6 +11,7 @@ import com.lxy.userEntity.BO.HomeworkClassBO;
 import com.lxy.userEntity.ClassHomeworks;
 import com.lxy.userEntity.Homeworks;
 import com.lxy.userEntity.VO.HomeworkInfoVO;
+import com.lxy.userEntity.VO.HomeworkStudentVO;
 import com.lxy.utils.FileStorageComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -72,6 +73,11 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworksMapper, Homeworks>
     @Override
     public List<HomeworkInfoVO> getHomeworkInfoVOList(String teacherId) {
         return homeworksMapper.getHomeworkInfoVOList(teacherId);
+    }
+
+    @Override
+    public List<HomeworkStudentVO> getStudentHomeworkInfoVOList(String stuId) {
+        return homeworksMapper.getStudentHomeworkInfoVOList(stuId);
     }
 
 

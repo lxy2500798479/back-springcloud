@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 public class AllClassesCourses implements Serializable {
 
-    List<Classes> classes;
-    List<Courses> courses;
+    private List<Classes> classes;
+    private List<Courses> courses;
     private static final long serialVersionUID = 1L;
 
 

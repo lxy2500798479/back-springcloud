@@ -186,8 +186,8 @@
         <result column="username" property="username"/>
         <result column="uname" property="uname"/>
         <result column="avatar" property="avatar"/>
-
-
+        <result column="classId" property="classId"/>
+        <result column="className" property="className"/>
         <collection ofType="com.lxy.userEntity.Roles" property="roles">
             <id column="roleId" property="roleId"/>
             <result column="roleName" property="roleName"/>
@@ -202,7 +202,6 @@
 
         <collection column="userId" ofType="com.lxy.userEntity.VO.MenusVO" property="menus"
                     select="selectMenusByUserId"/>
-
     </resultMap>
 
 
@@ -239,6 +238,8 @@
                u.username,
                u.uname,
                u.avatar,
+               s.class_id        as classId,
+               s.className       as className,
                r.role_id         as roleId,
                r.role_name       as roleName,
                r.description     as roleDescription,
@@ -250,6 +251,8 @@
                  left join userdb.roles r on r.role_id = ur.role_id
                  left join userdb.role_permissions rp on r.role_id = rp.role_id
                  left join userdb.permissions p on p.permission_id = rp.permission_id
+                 left join userdb.students s on u.username = s.stu_id
         where u.username = #{username,jdbcType=VARCHAR}
+        and u.status='active'
     </select>
 </mapper>

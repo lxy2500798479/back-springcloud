@@ -20,6 +20,8 @@ public class UserInfoVO {
     String username;
     String uname;
     String avatar;
+    int classId;
+    String className;
     List<Roles> roles;
     List<Permissions> permissions;
     List<MenusVO> menus;
