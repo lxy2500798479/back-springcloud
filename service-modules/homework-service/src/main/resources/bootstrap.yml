@@ -2,12 +2,13 @@ server:
   port: 8201
   servlet:
     context-path: /homework
-spring:
 
+
+
+spring:
 
   profiles:
     active: dev
-
 
   devtools:
     livereload:
@@ -42,5 +43,15 @@ spring:
           - data-id: redis-config.yaml
             refresh: true
             group: DEFAULT_GROUP
+
+
+minio:
+  endpoint: http://192.168.1.107:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  bucketName: tempfiles
+
+
+
 
 

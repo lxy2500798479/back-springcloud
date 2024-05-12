@@ -1,10 +1,7 @@
 package com.lxy.userEntity;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,13 +40,11 @@ public class Homeworks implements Serializable {
     /**
      * 作业创建时间
      */
-
     private Date createdAt;
 
     /**
      * 作业最后更新时间
      */
-
     private Date updatedAt;
 
     private String filePath;
@@ -60,6 +55,9 @@ public class Homeworks implements Serializable {
 
     private String fileType;
 
-    @Serial
+    private String fileMd5;
+
+    private String downloadUrl;
+
     private static final long serialVersionUID = 1L;
 }

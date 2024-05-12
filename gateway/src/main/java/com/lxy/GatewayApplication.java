@@ -8,7 +8,7 @@ import org.springframework.stereotype.Indexed;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @SpringBootApplication
 @EnableDiscoveryClient
 

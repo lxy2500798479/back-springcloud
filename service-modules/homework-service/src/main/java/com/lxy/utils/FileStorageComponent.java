@@ -70,9 +70,7 @@ public class FileStorageComponent {
 
     }
 
-//    public File getFile(){
-//
-//    }
+
 
 
 }

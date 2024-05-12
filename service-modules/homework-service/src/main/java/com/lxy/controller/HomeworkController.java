@@ -14,15 +14,20 @@ import lombok.RequiredArgsConstructor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -34,8 +39,6 @@ public class HomeworkController {
 
     private static final Logger log = LoggerFactory.getLogger(HomeworkController.class);
     private final HomeworkService homeworkService;
-
-    private final HomeworksMapper homeworksMapper;
 
     /**
      * Create homework result.
@@ -70,25 +73,66 @@ public class HomeworkController {
         return Result.success(homeworkService.getStudentHomeworkInfoVOList(classId));
     }
 
-    @GetMapping("/getFile")
-    public void download(HttpServletResponse response) {
-        response.reset();
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-disposition",
-                "attachment;filename=" + System.currentTimeMillis() + ".txt");
 
-        // 从文件读到servlet response输出流中
-        File file = new File("D://test.txt");
-        try (FileInputStream inputStream = new FileInputStream(file);) { // try-with-resources
-            byte[] b = new byte[1024];
-            int len;
-            while ((len = inputStream.read(b)) > 0) {
-                response.getOutputStream().write(b, 0, len);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    private volatile boolean stopDownload = false; // Flag to indicate whether to stop download
+
+    @GetMapping("/getFile")
+    public ResponseEntity<InputStreamResource> downloadFile(@RequestHeader(value = "Range", required = false) String rangeHeader) throws IOException {
+        File file = new File("C:\\Users\\Administrator\\Desktop\\SourceFiles\\Big\\homework\\upfile-back\\uploads\\teachers\\1778089553653182466\\1788578183500087297\\E.rar");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", URLEncoder.encode(file.getName(), "UTF-8"));
+
+        InputStream inputStream;
+        long fileSize = file.length();
+
+        if (rangeHeader == null) {
+            inputStream = new FileInputStream(file);
+            headers.setContentLength(fileSize);
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(new InputStreamResource(inputStream));
         }
+
+        String[] ranges = rangeHeader.substring("bytes=".length()).split("-");
+        long start = Long.parseLong(ranges[0]);
+        long end = fileSize - 1;
+        if (ranges.length > 1) {
+            end = Long.parseLong(ranges[1]);
+        }
+
+        headers.set("Content-Range", "bytes " + start + "-" + end + "/" + fileSize);
+
+        inputStream = new FileInputStream(file);
+        inputStream.skip(start);
+
+        long contentLength = end - start + 1;
+        headers.setContentLength(contentLength);
+
+        // Check if stop flag is set, if so, return 206 with no content
+        if (stopDownload) {
+            stopDownload = false; // Reset flag for subsequent downloads
+            return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
+                    .headers(headers)
+                    .body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
+                .headers(headers)
+                .body(new InputStreamResource(inputStream));
     }
+
+    @PostMapping("/stopDownload")
+    public Result<String> stopDownload() {
+        stopDownload = true;
+        return Result.success("Download stopped");
+    }
+
+
+
+
+
 
 
 
