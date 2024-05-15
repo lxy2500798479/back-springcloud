@@ -7,6 +7,7 @@ server:
 
 spring:
 
+
   profiles:
     active: dev
 
@@ -45,13 +46,18 @@ spring:
             group: DEFAULT_GROUP
 
 
-minio:
-  endpoint: http://192.168.1.107:9000
-  accessKey: minioadmin
-  secretKey: minioadmin
-  bucketName: tempfiles
 
-
+#minio:
+#  endpoint: http://127.0.0.1:9000
+#  accessKey: minioadmin
+#  secretKey: minioadmin
+#  bucketName: tempfiles
+#
+kangaroohy:
+  minio:
+    access-key: minioadmin
+    secret-key: minioadmin
+    endpoint: http://127.0.0.1:9000
 
 
 

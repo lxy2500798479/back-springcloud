@@ -51,12 +51,11 @@ public class HomeworkController {
 
 
     @PostMapping("/createHomework")
-    public Result<String> createHomework(@RequestParam("homework") String homeworkJson, @RequestParam(value = "file", required = false) MultipartFile file) throws JsonProcessingException {
+    public Result<String> createHomework(@RequestParam("homework") String homeworkJson) throws JsonProcessingException {
         // 先将homeworkJson字符串转换为Homeworks对象
         HomeworkClassBO homeworkClassBO = new ObjectMapper().readValue(homeworkJson, HomeworkClassBO.class);
 
-
-        boolean isSuccess = homeworkService.createHomework(file, homeworkClassBO) > 0;
+        boolean isSuccess = homeworkService.createHomework(homeworkClassBO) > 0;
 
         return isSuccess ? Result.success("作业创建成功") : Result.fail("作业创建失败");
     }

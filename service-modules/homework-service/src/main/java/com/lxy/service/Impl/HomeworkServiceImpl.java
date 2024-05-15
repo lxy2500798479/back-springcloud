@@ -1,6 +1,7 @@
 package com.lxy.service.Impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lxy.mapper.ClassHomeworksMapper;
@@ -35,7 +36,7 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworksMapper, Homeworks>
 
     @Override
     @Transactional
-    public int createHomework(MultipartFile file, HomeworkClassBO homeworksBO) {
+    public int createHomework( HomeworkClassBO homeworksBO) {
         Homeworks homework = homeworksBO.getHomeworks();
         // 为作业生成唯一的ID
         Long homeworkId = IdWorker.getId();
@@ -44,13 +45,14 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworksMapper, Homeworks>
         homework.setCreatedAt(new Date());
         homework.setUpdatedAt(new Date());
         // 处理文件存储逻辑，如果有文件的话
-        if (file != null && !file.isEmpty()) {
-            String filePath = fileStorageComponent.storeFile(file, homework.getTeacherId().toString(), homeworkId.toString());
-            homework.setFilePath(filePath);
-            homework.setFileName(file.getOriginalFilename());
-            homework.setFileSize(file.getSize());
-            homework.setFileType(file.getContentType());
-        }
+//        if (file != null && !file.isEmpty()) {
+//            String filePath = fileStorageComponent.storeFile(file, homework.getTeacherId().toString(), homeworkId.toString());
+//            homework.setFilePath(filePath);
+//            homework.setFileName(file.getOriginalFilename());
+//            homework.setFileSize(file.getSize());
+//            homework.setFileType(file.getContentType());
+//        }
+
 
         // 插入作业到数据库中
         homeworksMapper.insert(homework);
@@ -79,6 +81,24 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworksMapper, Homeworks>
     public List<HomeworkStudentVO> getStudentHomeworkInfoVOList(String stuId) {
         return homeworksMapper.getStudentHomeworkInfoVOList(stuId);
     }
+
+    @Override
+    public String isExistFile(String fileMd5) {
+        LambdaQueryWrapper<Homeworks> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Homeworks::getFileMd5, fileMd5);
+
+        // 查询匹配的所有记录
+        List<Homeworks> homeworkList = homeworksMapper.selectList(queryWrapper);
+
+        if (!homeworkList.isEmpty()) {
+            // 如果存在匹配的记录，则返回第一条记录的下载URL
+            return homeworkList.get(0).getDownloadUrl();
+        } else {
+            // 如果记录不存在，则返回空字符串或者抛出异常，根据具体需求来决定
+            return null;
+        }
+    }
+
 
 
 }

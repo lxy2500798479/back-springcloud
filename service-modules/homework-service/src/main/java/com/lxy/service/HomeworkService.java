@@ -11,9 +11,13 @@ import java.util.List;
 
 public interface HomeworkService extends IService<Homeworks> {
 
-    int createHomework(MultipartFile file, HomeworkClassBO homeworkClassBO);
+    int createHomework( HomeworkClassBO homeworkClassBO);
 
     List<HomeworkInfoVO> getHomeworkInfoVOList(String teacherId);
 
     List<HomeworkStudentVO> getStudentHomeworkInfoVOList(String stuId);
+
+    String isExistFile(String fileName);
+
+
 }
