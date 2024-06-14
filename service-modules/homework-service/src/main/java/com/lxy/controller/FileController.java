@@ -11,10 +11,12 @@ import com.lxy.service.HomeworkService;
 import io.minio.errors.MinioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,17 +32,15 @@ public class FileController {
     private final FileService fileService;
 
 
-
-
     @GetMapping("/checkExistByMd5")
-    public Result<String> checkExistByMd5(@RequestParam String md5) {
-       return Result.success(homeworkService.isExistFile(md5));
+    public Result<String> checkExistByMd5(@RequestParam String md5,@RequestParam String Utype) {
+        return Result.success(homeworkService.isExistFile(md5,Utype));
     }
 
     @GetMapping("/partUrl")
-    public Result<MultiPartUploadInfo> partUrl( @RequestParam String fileName,
+    public Result<MultiPartUploadInfo> partUrl(@RequestParam String fileName,
                                                @RequestParam int partSize, @RequestParam String contentType) throws MinioException {
-        return Result.success(fileService.getMultiPartUploadInfo("test",fileName, partSize, contentType));
+        return Result.success(fileService.getMultiPartUploadInfo("test", fileName, partSize, contentType));
     }
 
     @GetMapping("/mergePart")
@@ -57,13 +57,9 @@ public class FileController {
 
     @GetMapping("/download")
     public void downloadFile(@RequestParam String homeworkId,
-                             @RequestHeader HttpHeaders headers, HttpServletResponse response) throws MinioException, IOException {
-        fileService.downloadFile(homeworkId, headers, response);
+                                                              @RequestHeader(required = false) HttpHeaders headers, HttpServletResponse response) throws MinioException, IOException {
+        fileService.downloadFile(homeworkId, headers,response);
     }
-
-
-
-
 
 
 }

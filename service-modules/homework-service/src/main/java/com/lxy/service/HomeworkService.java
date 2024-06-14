@@ -2,6 +2,7 @@ package com.lxy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lxy.userEntity.BO.HomeworkClassBO;
+import com.lxy.userEntity.HomeworkSubmissions;
 import com.lxy.userEntity.Homeworks;
 import com.lxy.userEntity.VO.HomeworkInfoVO;
 import com.lxy.userEntity.VO.HomeworkStudentVO;
@@ -17,7 +18,11 @@ public interface HomeworkService extends IService<Homeworks> {
 
     List<HomeworkStudentVO> getStudentHomeworkInfoVOList(String stuId);
 
-    String isExistFile(String fileName);
+    String isExistFile(String fileName,String Utype);
+
+
+    int updateHomeworkSubmission(HomeworkSubmissions homeworkSubmissions);
+
 
 
 }

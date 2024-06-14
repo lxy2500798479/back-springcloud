@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -41,9 +42,12 @@ public class HomeworkApplicationTest {
 
     @Test
     void demo() throws MinioException, IOException, NoSuchAlgorithmException, InvalidKeyException {
+        InputStream object = minioService.getObject("test", "1-%25E6%25AD%25A4......%25E6%25AD%25A4%25E8%25A7%2586%25E9%25A2%2591%25E6%2597%25A0%25E4%25BA%25BA%25E8%2583%25BD%25E7%2599%25BD%25E5%25AB%2596%25EF%25BC%2581-1080P%2520%25E9%25AB%2598%25E6%25B8%2585-AVC_7a357e9ecfb0c774d28cf3dc2638f451.mp4");
 
-        String a="http://127.0.0.1:9000/test/300176_d400dc09d446578de0039e4c6b2754c6.jpg";
-        extractObjectName(a);
+
+
+//        String a="http://127.0.0.1:9000/test/300176_d400dc09d446578de0039e4c6b2754c6.jpg";
+//        extractObjectName(a);
 //        minioClient.listBuckets().forEach(bucket ->{
 //            System.out.println(bucket.name());
 //            System.out.println(bucket.creationDate());

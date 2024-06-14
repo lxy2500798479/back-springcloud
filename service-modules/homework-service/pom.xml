@@ -30,6 +30,7 @@
             <artifactId>hutool-core</artifactId>
             <version>5.7.10</version>
         </dependency>
+
 <!--        <dependency>-->
 <!--            <groupId>io.minio</groupId>-->
 <!--            <artifactId>minio</artifactId>-->

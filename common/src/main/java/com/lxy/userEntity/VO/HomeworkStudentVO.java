@@ -16,5 +16,6 @@ public class HomeworkStudentVO implements Serializable {
     String teacherId;
     String teacherName;
     String fileName;
+    long fileSize;
 
 }

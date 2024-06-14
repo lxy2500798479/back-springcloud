@@ -5,9 +5,11 @@ import com.kangaroohy.minio.entity.MultiPartUploadInfo;
 import com.lxy.result.Result;
 import io.minio.errors.MinioException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -38,6 +40,8 @@ public interface FileService {
     void  downloadFile(@RequestParam String homeworkId,
                                 @RequestHeader HttpHeaders headers, HttpServletResponse response) throws MinioException, IOException;
 
+
+//    void downloadFile(String homeworkId, @RequestHeader HttpHeaders headers) throws MinioException, IOException;
 //    Object uploadFile(@RequestParam(value = "bucketName",defaultValue = "test") String bucketName, String fileName, String uploadId) throws MinioException;
 
 

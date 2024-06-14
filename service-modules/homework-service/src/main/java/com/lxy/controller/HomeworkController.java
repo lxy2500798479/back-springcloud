@@ -3,28 +3,25 @@ package com.lxy.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lxy.mapper.HomeworksMapper;
+import com.lxy.mapper.HomeworkSubmissionsMapper;
 import com.lxy.result.Result;
 import com.lxy.service.HomeworkService;
 import com.lxy.userEntity.BO.HomeworkClassBO;
 
+import com.lxy.userEntity.HomeworkSubmissions;
 import com.lxy.userEntity.VO.HomeworkInfoVO;
 import com.lxy.userEntity.VO.HomeworkStudentVO;
 import lombok.RequiredArgsConstructor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.io.*;
 import java.net.URLEncoder;
@@ -39,12 +36,12 @@ public class HomeworkController {
 
     private static final Logger log = LoggerFactory.getLogger(HomeworkController.class);
     private final HomeworkService homeworkService;
+    private final HomeworkSubmissionsMapper homeworkSubmissionsMapper;
 
     /**
      * Create homework result.
      *
      * @param homeworkJson the homework json
-     * @param file         the file
      * @return the result
      * @throws JsonProcessingException the json processing exception
      */
@@ -126,6 +123,14 @@ public class HomeworkController {
     public Result<String> stopDownload() {
         stopDownload = true;
         return Result.success("Download stopped");
+    }
+
+
+    @PostMapping("/submissionHomework")
+    public Result<Integer> submissionHomework(@RequestBody HomeworkSubmissions homeworkSubmissions){
+
+        return Result.success(homeworkService.updateHomeworkSubmission(homeworkSubmissions));
+
     }
 
 
